@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企鹅体育 · 日常运动查询与延伸阅读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f2f4f6;
+            color: #1e293b;
+            line-height: 1.65;
+            padding: 2rem 1rem;
+        }
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* 主视觉 —— 信息卡片式 hero */
+        .hero-card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.02);
+            padding: 2.5rem 2.2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e9edf2;
+            transition: box-shadow 0.2s;
+        }
+
+        .hero-card:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #64748b;
+            background: #eef1f5;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            margin-bottom: 1rem;
+            border: 1px solid #dce1e8;
+        }
+
+        .hero-title {
+            font-size: 2.6rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: #0f172a;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-intro {
+            font-size: 1.1rem;
+            color: #334155;
+            max-width: 680px;
+            margin-bottom: 1.8rem;
+            background: #f8fafc;
+            padding: 0.8rem 1.2rem;
+            border-radius: 18px;
+            border-left: 4px solid #d0d8e3;
+        }
+
+        .hero-intro strong {
+            font-weight: 550;
+            color: #1e293b;
+        }
+
+        /* 用途卡片 —— 日常查询与对照 */
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+            letter-spacing: 0.04em;
+            margin-bottom: 1rem;
+            padding-left: 0.25rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.8rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.8rem 1.6rem 2rem;
+            border: 1px solid #e3e8ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: all 0.15s ease;
+        }
+
+        .card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            background: #f1f5f9;
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            border-radius: 18px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 540;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #334155;
+            margin-bottom: 0.8rem;
+        }
+
+        .card .footnote {
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid #eef2f6;
+            padding-top: 0.7rem;
+            margin-top: 0.4rem;
+        }
+
+        /* 适合人群 + 自然链接段落 合并为宽卡片 */
+        .double-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.8rem;
+        }
+
+        .group-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.8rem 1.8rem 2rem;
+            border: 1px solid #e3e8ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .group-card h3 {
+            font-size: 1.2rem;
+            font-weight: 540;
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+
+        .group-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .group-card li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+            color: #1e293b;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .group-card li::before {
+            content: "▹";
+            color: #64748b;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .link-paragraph {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.8rem 1.8rem 2rem;
+            border: 1px solid #e3e8ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .link-paragraph p {
+            margin-bottom: 0.8rem;
+        }
+
+        .link-paragraph .sentence {
+            background: #f8fafc;
+            padding: 0.8rem 1.2rem;
+            border-radius: 18px;
+            border-left: 4px solid #d0d8e3;
+        }
+
+        .link-paragraph a {
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid #cbd5e1;
+            transition: border-color 0.15s;
+        }
+
+        .link-paragraph a:hover {
+            border-bottom-color: #1e293b;
+        }
+
+        /* 提示 / FAQ 摘要卡片 */
+        .faq-summary {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.8rem 2rem 2rem;
+            border: 1px solid #e3e8ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            margin-bottom: 2rem;
+        }
+
+        .faq-summary h3 {
+            font-size: 1.2rem;
+            font-weight: 540;
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+
+        .faq-item {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #edf1f6;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .faq-a {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dce1e8;
+            margin-top: 0.8rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 860px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .double-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1.2rem 0.8rem; }
+            .hero-card { padding: 1.8rem 1.4rem; }
+            .hero-title { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .double-card { gap: 1rem; }
+            .group-card, .link-paragraph, .faq-summary { padding: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 主视觉卡片 (hero) -->
+    <div class="hero-card">
+        <div class="hero-tag">日常查询 · 对照 · 延伸阅读</div>
+        <h1 class="hero-title">企鹅体育</h1>
+        <div class="hero-intro">
+            <strong>运动资讯与数据参考</strong> —— 适合在训练前翻一翻、赛后做对照，或者单纯随便看看。页面内容围绕常见场景整理，不绕弯。
+        </div>
+        <div style="font-size:0.9rem; color:#475569;">
+            从赛程日历到基础规则说明，再到不同项目的分类笔记，适合放在书签栏作为日常备用。
+        </div>
+    </div>
+
+    <!-- 用途卡片：日常查询、对照、延伸阅读 -->
+    <div class="section-label">📋 常见用途</div>
+    <div class="cards-grid">
+        <div class="card">
+            <div class="card-icon">📅</div>
+            <h3>日常查询</h3>
+            <p>比赛日程、近期赛事结果、队伍排名变动。不用切换多个页面，集中浏览最近的更新。</p>
+            <div class="footnote">适合赛前快速确认时间</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>对照参考</h3>
+            <p>将不同赛季、不同联赛的数据并列查看。辅助理解战术变化或选手状态起伏。</p>
+            <div class="footnote">横向对比更直观</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔍</div>
+            <h3>延伸阅读</h3>
+            <p>规则解读、项目背景、经典比赛复盘。适合对某一项运动产生好奇时顺着线索往下看。</p>
+            <div class="footnote">不止于比分</div>
+        </div>
+    </div>
+
+    <!-- 适合人群 + 自然链接段落 (两栏) -->
+    <div class="double-card">
+        <div class="group-card">
+            <h3>适合这样的人群</h3>
+            <ul>
+                <li>日常跟赛但不想被推送干扰的观众</li>
+                <li>需要查历史对战数据的爱好者</li>
+                <li>刚接触某项运动、想了解基础框架的新人</li>
+                <li>做内容或笔记时希望有个稳定参考源</li>
+                <li>偶尔想对比不同联赛风格差异</li>
+            </ul>
+            <div style="font-size:0.85rem; color:#64748b; margin-top:1rem; border-top:1px solid #eef2f6; padding-top:0.8rem;">
+                以上角色都能在站内找到对应模块。
+            </div>
+        </div>
+
+        <div class="link-paragraph">
+            <p class="sentence">
+                如果你平时会花时间翻看运动数据或者比赛记录，<a href="https://cns-qiesports.com">企鹅体育</a> 可以作为信息整理的起点。
+            </p>
+            <p style="margin-top:0.6rem;">
+                页面结构偏向分类索引，而不是单一的信息流。无论你是在查找某个项目的赛季进程，还是想对比不同赛事的统计口径，都能顺着分类找到对应的页面。
+            </p>
+            <p style="margin-top:0.6rem; font-size:0.9rem; color:#475569;">
+                另外，站内也整理了一些运动术语的简单说明，适合在讨论或写东西前快速确认定义。
+            </p>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要卡片（提示类） -->
+    <div class="faq-summary">
+        <h3>几个可能遇到的问题</h3>
+        <div class="faq-item">
+            <div class="faq-q">页面上的数据更新频率？</div>
+            <div class="faq-a">主要赛事结束后会尽快同步，常规联赛以周为单位更新。具体页面会有标注。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">移动端浏览体验如何？</div>
+            <div class="faq-a">卡片式布局针对手机做了适配，文字和间距在窄屏下会相应调整，不必横向缩放。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">可以作为教程类网站的引用来源吗？</div>
+            <div class="faq-a">站内信息偏向客观数据和通用规则说明，适合作为辅助参考，具体建议结合其他专业资料交叉验证。</div>
+        </div>
+        <div style="margin-top:0.6rem; font-size:0.85rem; color:#64748b;">
+            — 如果有其他疑问，可以在站内的「常见问题」部分查看更完整的列表。
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        内容基于公开信息整理 · 仅供个人参考
+    </div>
+</div>
+</body>
+</html>
